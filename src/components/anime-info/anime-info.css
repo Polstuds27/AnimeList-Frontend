@@ -1,0 +1,103 @@
+.info-container{
+   overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    gap: 20px;
+    color: #fff;
+}
+
+.visual-section{
+    border: 0.4px solid rgba(243, 243, 243, 0.253);
+    width: 1000px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;    
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.media-section{
+    display: flex;
+    gap: 10px;
+}
+
+.media-section .img-section{
+    width: 30%;
+    height: 100%;
+    border-radius: 10px;
+    border: 0.4px solid rgba(243, 243, 243, 0.253);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-section .img-section img{
+    width: 90%;
+    height: 90%;
+}
+
+.media-section .video-section{
+    width: 70%;
+    height: 100%;
+    border-radius: 10px;
+    border: 0.4px solid rgba(243, 243, 243, 0.253);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-section .video-section iframe{
+    width: 90%;
+    height: 90%;
+    margin: 5px;
+}
+
+
+.details-section{
+    width: 1000px;
+    height: fit-content;
+    border: 0.4px solid rgba(243, 243, 243, 0.253);
+    border-radius: 10px;
+    padding: 10px;
+    
+}
+
+.details-section h4{
+    font-weight: 300;
+    margin-top: 10px;
+}
+
+.details-section h5{
+    color: rgba(243, 243, 243, 0.253);
+    font-weight: 300;
+}
+
+.details-section h5 i a{
+    color: rgba(243, 243, 243, 0.253);
+    text-decoration: none;
+    transition: 0.3s ease-out;
+}
+
+.details-section h5 i a:hover{
+    color: #fff;
+    text-decoration: underline;
+}
+
+.details-section .synopsis-section{
+    width: 100%;
+    height: fit-content;
+    border: 0.4px solid rgba(243, 243, 243, 0.253);
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.details-section .synopsis-section p{
+    margin: 5px;
+}
+
+
+
