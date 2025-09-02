@@ -13,7 +13,7 @@ function AnimeInfo(){
     const [animeInfo, setAnimeInfo] = useState([]);
 
     useEffect(()=>{
-        fetch(`http://localhost:3000/animes/info/${id}`)
+        fetch(`https://anime-list-backend-two.vercel.app/api/animes/info/${id}`)
         .then((res)=>res.json())
         .then((data)=>{
             setAnimeInfo(data);

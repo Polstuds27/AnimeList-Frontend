@@ -16,7 +16,7 @@ function Home(){
 
 
     function fetchData(page){
-        fetch(`http://localhost:3000/animes/${page}`)
+        fetch(`https://anime-list-backend-two.vercel.app/api/animes/${page}`)
         .then((res)=>res.json())
         .then((data)=>{
             setAnimeInfo(data);

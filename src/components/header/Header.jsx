@@ -11,7 +11,7 @@ function Header({setAnimeInfo, setSearchOn, setCurrentPage, isHome=false}){
         } 
 
         try{
-            const response = await fetch(`http://localhost:3000/animes/search/${animeName}`);
+            const response = await fetch(`https://anime-list-backend-two.vercel.app/api/animes/search/${animeName}`);
             const data = await response.json();
             setAnimeInfo(data);
         }catch(err){
