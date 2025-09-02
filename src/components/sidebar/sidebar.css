@@ -1,7 +1,6 @@
 .sidebar-container{
     height: 100%;
     width: 200px;
-    max-width: 200px;
     min-width: 200px;
     background-color: #000;
     margin-top: 0%;
@@ -39,5 +38,31 @@
 .sidebar-container ul li .link span{
     scale: 1.1;
 }
+
+.sidebar-container ul li span {
+    display: inline-block;
+}
+
+.sidebar-container ul li .icon{
+    display: none;
+}
+
+@media (min-width: 300px) and (max-width: 720px){
+    .sidebar-container{
+        max-width: 50px;
+        width: 50px;
+        min-width: 50px;
+    }
+
+    .sidebar-container ul li span {
+        display: none; /* hide text */
+    }
+
+    .sidebar-container ul li .icon {
+        display: inline-block; /* show icon */
+        font-size: 18px;
+    }
+}
+
 
 

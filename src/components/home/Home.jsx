@@ -4,54 +4,68 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import AnimeCard from "../anime-card/AnimeCard";
 import { useEffect, useState } from 'react';
+import PaginationBar from '../pagination-bar/PaginationBar';
 function Home(){
     
     const [animeInfo, setAnimeInfo] = useState([]);
-     const [loading, setLoading] = useState(true); // 👈 add loading state
-    const [error, setError] = useState(null); // 👈 optional error state
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
 
-    useEffect(()=>{
-        fetch("http://localhost:3000/animes")
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchOn, setSearchOn] = useState(false);
+
+
+    function fetchData(page){
+        fetch(`http://localhost:3000/animes/${page}`)
         .then((res)=>res.json())
         .then((data)=>{
             setAnimeInfo(data);
             setLoading(false);
-
         })
         .catch((err)=>{
             console.error(err);
             setError("Error loading!");
             setLoading(false);   
         });
-    },[])
-
-    if (loading) {
-        return <h2 style={{color:"white"}}>Loading anime list...</h2>;
     }
 
-    if (error) {
-        return <h2 style={{color:"red"}}>{error}</h2>;
-    }
+    const handleHomeClick = () => {
+    setSearchOn(false);
+    setCurrentPage(1);
+    fetchPage(1);
+    };
+
+    useEffect(()=>{
+        fetchData(currentPage);
+    },[currentPage]);
 
     return(
         <>
-            <Header/>
+            <Header 
+            setAnimeInfo={setAnimeInfo} 
+            setSearchOn={setSearchOn}
+            setCurrentPage={setCurrentPage}
+            isHome={true}
+            />
             <main className="body-container">
-                <SideBar />
+                <SideBar 
+                onHomeClick={handleHomeClick}/>
                 <div className="home-container">
                     {animeInfo.map((a)=>(
                         <AnimeCard 
                         key={a.id}
+                        id={a.id}
                         image={a.image} 
                         title={a.title} 
-                        title_english = {a.title_english}
-                        episodes = {a.episodes}
-                        score = {a.score}
-                        rank = {a.rank}
-                        trailer = {a.trailer}
-                        genres = {a.genres}
                         />
                     ))}
+
+                    <PaginationBar
+                    currentPage={currentPage}
+                    totalPage={100}
+                    setCurrentPage={setCurrentPage}
+                    searchOn={searchOn}
+                    />
                 </div>
             </main>
             <Footer/>
