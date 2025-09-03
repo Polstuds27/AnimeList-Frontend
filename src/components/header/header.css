@@ -58,10 +58,11 @@
 
     .header-container .input-wrapper #search-bar{
         width: 70%;
-        height: 80%;
+        height: 70%;
     }
 
     .input-wrapper{
-        margin-right: 10px;
+        margin-right: 5px;
+        margin-left: 20px;
     }
 }

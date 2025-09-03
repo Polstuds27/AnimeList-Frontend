@@ -5,6 +5,7 @@ import Footer from "../footer/Footer";
 import AnimeCard from "../anime-card/AnimeCard";
 import { useEffect, useState } from 'react';
 import PaginationBar from '../pagination-bar/PaginationBar';
+import Loader from '../loader/Loader'
 function Home(){
     
     const [animeInfo, setAnimeInfo] = useState([]);
@@ -16,6 +17,7 @@ function Home(){
 
 
     function fetchData(page){
+        setLoading(true);
         fetch(`https://anime-list-backend-two.vercel.app/api/animes/${page}`)
         .then((res)=>res.json())
         .then((data)=>{
@@ -46,12 +48,22 @@ function Home(){
             setSearchOn={setSearchOn}
             setCurrentPage={setCurrentPage}
             isHome={true}
+            setLoading={setLoading}
             />
             <main className="body-container">
                 <SideBar 
                 onHomeClick={handleHomeClick}/>
                 <div className="home-container">
-                    {animeInfo.map((a)=>(
+
+                {loading ? 
+                (<Loader/>) 
+                : 
+                error 
+                ? 
+                (<h2 style={{ color: "red" }}>{error}</h2>) 
+                :
+                ( <>
+                    {animeInfo.map((a) => (
                         <AnimeCard 
                         key={a.id}
                         id={a.id}
@@ -59,13 +71,19 @@ function Home(){
                         title={a.title} 
                         />
                     ))}
+                    </>
+                    )}
 
-                    <PaginationBar
-                    currentPage={currentPage}
-                    totalPage={100}
-                    setCurrentPage={setCurrentPage}
-                    searchOn={searchOn}
-                    />
+
+                    {!searchOn && (
+                        <PaginationBar
+                        currentPage={currentPage}
+                        totalPage={100}
+                        setCurrentPage={setCurrentPage}
+                        searchOn={searchOn}
+                        />
+                    )}
+                    
                 </div>
             </main>
             <Footer/>

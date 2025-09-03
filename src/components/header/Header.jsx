@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './header.css';
 
-function Header({setAnimeInfo, setSearchOn, setCurrentPage, isHome=false}){
+function Header({setAnimeInfo, setSearchOn, setCurrentPage, isHome=false, setLoading}){
 
     const [animeName, setAnimeName] = useState("");
         async function search(){
@@ -10,11 +10,14 @@ function Header({setAnimeInfo, setSearchOn, setCurrentPage, isHome=false}){
             return;
         } 
 
+        setLoading(true);
         try{
             const response = await fetch(`https://anime-list-backend-two.vercel.app/api/animes/search/${animeName}`);
             const data = await response.json();
             setAnimeInfo(data);
+            setLoading(false);
         }catch(err){
+            setLoading(false);
             console.error(err);
         }
     }

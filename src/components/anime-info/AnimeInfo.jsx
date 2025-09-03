@@ -4,12 +4,13 @@ import Header from "../header/Header";
 import Footer from "../footer/Footer";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Loader from '../loader/Loader'
 function AnimeInfo(){
 
     const {id} = useParams();
 
-    //const [loading, setLoading] = useState(true); 
-    //const [error, setError] = useState(null); 
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null); 
     const [animeInfo, setAnimeInfo] = useState([]);
 
     useEffect(()=>{
@@ -17,19 +18,35 @@ function AnimeInfo(){
         .then((res)=>res.json())
         .then((data)=>{
             setAnimeInfo(data);
+            setLoading(false);
         })
         .catch(err =>{
             console.error(err);
+            setError(err);
+            setLoading(false);
         })    
     },[id])
 
+
+    function getEmbedUrl(url) {
+    if (!url) return null;
+    const videoIdMatch = url.match(/v=([^&]+)/);
+    return videoIdMatch ? `https://www.youtube.com/embed/${videoIdMatch[1]}` : url;
+    }
 
     return(
         <>
             <Header isHome={false}/>
             <main className="body-container">
                 <SideBar />
-                <div className="info-container">
+
+                {loading ? (<Loader/>)
+                :
+                error ?
+                (<h2 style={{ color: "red" }}>{error}</h2>)
+                :
+                <>
+                     <div className="info-container">
                     <div className="visual-section">
                         <h1>{animeInfo.title}</h1>
                             <div className="media-section">
@@ -37,12 +54,16 @@ function AnimeInfo(){
                                 <img src={animeInfo.image}/* poster*/ alt="" />
                             </div>
                             <div className="video-section">
-                                <iframe src={animeInfo.trailer}//trailer 
-                                title="YouTube video player" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                                </iframe>
+                                {animeInfo.trailer ? (
+                                    <iframe
+                                    src={getEmbedUrl(animeInfo.trailer)} 
+                                    title="YouTube video player"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    ></iframe>
+                                ) : (
+                                    <p style={{ color: "white" }}>No trailer available</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -73,6 +94,8 @@ function AnimeInfo(){
                     <div className="reviews-section">   
                     </div>
                 </div>
+                </> 
+                }
             </main>
             <Footer/>
         </>
